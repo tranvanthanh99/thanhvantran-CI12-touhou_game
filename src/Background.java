@@ -6,7 +6,7 @@ public class Background {
     BufferedImage image;
     int x, y;
     public Background(){
-        this.image = SpriteUtils.loadImage("assets/images/background/0.png");
+        this.image = SpriteUtils.loadImage("assets/images/background/0 - Copy.png");
         this.x = 0;
         this.y = 600 - this.image.getHeight();
 
@@ -16,7 +16,9 @@ public class Background {
         if (this.y < 0) {
             this.y += 10;
         }
-
+        else {
+            this.y = 600 - this.image.getHeight();
+        }
 
     }
 
