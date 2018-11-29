@@ -12,6 +12,8 @@ public class Program {
         GameCanvas gameCanvas = new GameCanvas();
         gameWindow.add(gameCanvas);
 
+        gameCanvas.gameloop();
+
     }
 
 }
