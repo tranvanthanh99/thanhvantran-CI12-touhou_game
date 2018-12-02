@@ -3,12 +3,12 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class GameWindow extends JFrame {
-    public static boolean isUpPress, isDownPress, isLeftPress, isRightPress;
+    public static boolean isUpPress, isDownPress, isLeftPress, isRightPress, isSpacePress;
 
     public GameWindow(){
         this.setVisible(true);
         this.setTitle("touhou");
-        this.setSize(600,600);
+//        this.setSize(600,600);
         this.setResizable(false);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.addKeyListener(new KeyAdapter() {
@@ -26,6 +26,9 @@ public class GameWindow extends JFrame {
                 if (e.getKeyCode() == KeyEvent.VK_A) {
                     isLeftPress = true;
                 }
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    isSpacePress = true;
+                }
             }
 
             @Override
@@ -41,6 +44,9 @@ public class GameWindow extends JFrame {
                 }
                 if (e.getKeyCode() == KeyEvent.VK_A) {
                     isLeftPress = false;
+                }
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    isSpacePress = false;
                 }
             }
         });
