@@ -1,5 +1,7 @@
 package game;
 
+import game.renderer.TextRenderer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
@@ -9,13 +11,14 @@ public class GameCanvas extends JPanel {
     Background background;
     Player player;
     public static ArrayList<PlayerBullet> playerBullets ;
-
+    TextRenderer text = new TextRenderer("ABCDEFGH");
 
     public GameCanvas(){
         this.setBackground(Color.white);
         this.background = new Background();
         this.player = new Player();
         this.playerBullets = new ArrayList<>();
+
     }
 
     @Override
@@ -23,6 +26,7 @@ public class GameCanvas extends JPanel {
         g.fillRect(0, 0 ,600, 600);
         this.background.render(g);
         this.player.render(g);
+        this.text.render(g);
         for ( int i = 0; i < playerBullets.size(); i++){
             PlayerBullet bullet = this.playerBullets.get(i);
 //            g.drawImage(bullet.image, (int) bullet.position.x, (int) bullet.position.y, null);

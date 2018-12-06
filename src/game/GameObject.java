@@ -1,6 +1,7 @@
 package game;
 
 import game.renderer.Renderer;
+import game.renderer.TextRenderer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -22,5 +23,6 @@ public class GameObject {
         if (this.renderer != null){
             this.renderer.render(g, this);
         }
+
     }
 }

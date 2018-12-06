@@ -1,6 +1,7 @@
 package game;
 
 import game.renderer.SingerImageRenderer;
+import game.renderer.TextRenderer;
 import tklibs.SpriteUtils;
 
 import java.awt.*;
@@ -27,6 +28,7 @@ public class Background extends GameObject{
 //            this.y = 600 - this.image.getHeight();
             this.position.set(this.position.x , Settings.SCREEN_HEIGHT - this.image.getHeight());
         }
+
 
     }
 

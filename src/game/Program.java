@@ -1,5 +1,7 @@
 package game;
 
+import game.renderer.TextRenderer;
+
 import java.awt.*;
 
 /**
