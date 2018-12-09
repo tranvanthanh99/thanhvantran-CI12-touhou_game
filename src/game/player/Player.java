@@ -1,14 +1,14 @@
-package game;
+package game.player;
 
+import game.*;
 import game.renderer.Animation;
 import tklibs.Mathx;
 import tklibs.SpriteUtils;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Player extends GameObject{
+public class Player extends GameObject {
     Background background;
 
 
@@ -29,7 +29,8 @@ public class Player extends GameObject{
         images.add(SpriteUtils.loadImage("assets/images/players/straight/4.png"));
         images.add(SpriteUtils.loadImage("assets/images/players/straight/5.png"));
         images.add(SpriteUtils.loadImage("assets/images/players/straight/6.png"));
-        this.renderer = new Animation(images);
+//        this.renderer = new Animation(images);
+        this.renderer = new PlayerRenderer("player", images);
     }
 
 
@@ -51,8 +52,9 @@ public class Player extends GameObject{
         if (GameWindow.isSpacePress) {
             PlayerBullet bullet = new PlayerBullet();
             bullet.position = new Vector2D(this.position.x, this.position.y - bullet.image.getHeight());
-            GameCanvas.playerBullets.add(bullet);
+            GameObject.addGameObject(bullet);
             count = 0;
+
         }
     }
 
@@ -77,11 +79,13 @@ public class Player extends GameObject{
 
     private void limitPlayerPosition() {
         BufferedImage image = SpriteUtils.loadImage("assets/images/players/straight/0.png");
+        int halfWidth = (int) (Settings.PLAYER_WIDTH *  this.anchor.x);
+        int halfHeight = (int) (Settings.PLAYER_HEIGHT *  this.anchor.y);
 
         // limit x [0, background.image.getwidth()]
-        float x = (float) Mathx.clamp(this.position.x, 0, background.image.getWidth() - image.getWidth());
+        float x = (float) Mathx.clamp(this.position.x, halfWidth, background.image.getWidth() - halfWidth);
         // limit y [0 , max y]
-        float y = (float) Mathx.clamp(this.position.y, 0, Settings.SCREEN_HEIGHT - image.getHeight());
+        float y = (float) Mathx.clamp(this.position.y, halfHeight, Settings.SCREEN_HEIGHT - halfHeight);
         this.position.set(x, y);
     }
 

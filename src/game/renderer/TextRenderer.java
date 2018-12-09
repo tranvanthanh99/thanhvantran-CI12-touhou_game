@@ -4,16 +4,16 @@ import game.GameObject;
 
 import java.awt.*;
 
-public class TextRenderer {
+public class TextRenderer extends Renderer{
     String text;
 
     public TextRenderer(String text) {
         this.text = text;
     }
 
-    public void render(Graphics g) {
+    public void render(Graphics g, GameObject master) {
         g.setColor(Color.BLUE);
-        g.drawString(this.text, 100, 100);
+        g.drawString(this.text,  (int)master.position.x, (int)master.position.y);
 
     }
 }

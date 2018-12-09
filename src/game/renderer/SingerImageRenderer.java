@@ -12,6 +12,6 @@ public class SingerImageRenderer extends Renderer{
     }
     @Override
     public void render(Graphics g, GameObject master) {
-        g.drawImage(this.image, (int)master.position.x, (int)master.position.y, null);
+        g.drawImage(this.image, (int) (master.position.x - this.image.getWidth() * master.anchor.x), (int) (master.position.y - this.image.getHeight() * master.anchor.y), null);
     }
 }
