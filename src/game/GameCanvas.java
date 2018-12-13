@@ -12,10 +12,13 @@ public class GameCanvas extends JPanel {
     public GameCanvas(){
         this.setBackground(Color.white);
 //        this.background = new Background();
-        GameObject.addGameObject(new Background());
+//        GameObject.addGameObject(new Background());
+        GameObject.createGameObject(Background.class);
 //        this.player = new Player();
-        GameObject.addGameObject(new Player());
-        GameObject.addGameObject(new Enemy());
+//        GameObject.addGameObject(new Player());
+        GameObject.createGameObject(Player.class);
+//        GameObject.addGameObject(new Enemy());
+        GameObject.createGameObject(Enemy.class);
 //        this.playerBullets = new ArrayList<>();
     }
 

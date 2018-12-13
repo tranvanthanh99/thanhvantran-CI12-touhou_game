@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class Player extends GameObject {
     Background background;
+    FrameCounter fireCounter;
 
 
     public Player(){
@@ -18,6 +19,7 @@ public class Player extends GameObject {
         this.position.set(Settings.PLAYER_POSITION_X, Settings.PLAYER_POSITION_Y);
         this.createRenderer();
         this.background = new Background();
+        this.fireCounter = new FrameCounter(20);
     }
 
     private void createRenderer() {
@@ -34,13 +36,12 @@ public class Player extends GameObject {
     }
 
 
-    int count = 0; // TODO: se fix
     @Override
     public void run() {
-
+        super.run();
         this.move();
-        count++;
-        if (count > 20) {
+
+        if (this.fireCounter.run()) {
             this.fire();
 
         }
@@ -53,32 +54,33 @@ public class Player extends GameObject {
             PlayerBullet bullet = new PlayerBullet();
             bullet.position = new Vector2D(this.position.x, this.position.y - bullet.image.getHeight());
             GameObject.addGameObject(bullet);
-            count = 0;
+            this.fireCounter.reset();
 
         }
     }
 
     public void move() {
+        int vx = 0;
+        int vy = 0;
+        int speed = 5;
         if (GameWindow.isUpPress ) {
-
-            this.position.addThis(0 , -5);
+            vy --;
         }
         if (GameWindow.isDownPress ) {
-
-            this.position.addThis(0 , 5);
+            vy ++;
         }
         if (GameWindow.isRightPress ) {
-
-            this.position.addThis(5 , 0);
+            vx ++;
         }
         if (GameWindow.isLeftPress ) {
-
-            this.position.addThis(-5 , 0);
+            vx --;
         }
+        this.velocity.set(vx, vy);
+        this.velocity.setLength(speed);
     }
 
     private void limitPlayerPosition() {
-        BufferedImage image = SpriteUtils.loadImage("assets/images/players/straight/0.png");
+//        BufferedImage image = SpriteUtils.loadImage("assets/images/players/straight/0.png");
         int halfWidth = (int) (Settings.PLAYER_WIDTH *  this.anchor.x);
         int halfHeight = (int) (Settings.PLAYER_HEIGHT *  this.anchor.y);
 
