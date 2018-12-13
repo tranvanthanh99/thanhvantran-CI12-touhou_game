@@ -23,8 +23,8 @@ public class Rectangle {
      */
     public boolean intersects(Rectangle other) {
         // TODO: 1. Triển khai phần code kiểm tra va chạm giữa 2 hình chữ nhật ở đây
-        if (this.position.y < other.position.y + other.height
-            && this.position.y + this.height < other.position.y) {
+        if (this.position.y > other.position.y + other.height
+            || this.position.y + this.height < other.position.y) {
             return false;
         }
         if (this.position.x + this.width < other.position.x
