@@ -1,5 +1,6 @@
 package game;
 
+import game.physics.BoxCollider;
 import game.renderer.Renderer;
 import game.renderer.TextRenderer;
 
@@ -15,10 +16,30 @@ public class GameObject {
         gameObjects.add(object);
     }
 
+    public static <E extends GameObject> E findInactive(Class<E> clazz) {
+        for (int i = 0; i <  gameObjects.size(); i++) {
+            GameObject object = gameObjects.get(i);
+            if (!object.active
+                    && clazz.isAssignableFrom(object.getClass())) {
+                return (E)object;
+            }
+        }
+        return null;
+    }
+
+    public static <E extends GameObject> E findIntersected (Class<E> clazz, BoxCollider boxCollider) {
+        
+    }
+
     // class<E> clazz = Background.class
     // E ~ background
 
-    public static <E extends GameObject> E createGameObject(Class<E> clazz) {
+    public static <E extends GameObject> E recycle(Class<E> clazz) {
+        E find = findInactive(clazz);
+        if (find != null) {
+            find.reset();
+            return find;
+        }
         try {
             E newInstance = clazz.newInstance();
             addGameObject(newInstance);
@@ -29,16 +50,17 @@ public class GameObject {
     }
 
     public static void runAll() {
+        System.out.println(gameObjects.size());
         for (int i = 0; i < gameObjects.size(); i++) {
             GameObject object = gameObjects.get(i);
-            object.run();
+            if (object.active) object.run();
         }
     }
 
     public static void renderAll(Graphics g) {
         for (int i = 0; i < gameObjects.size(); i++) {
             GameObject object = gameObjects.get(i);
-            object.render(g);
+            if (object.active) object.render(g);
         }
     }
     //
@@ -48,12 +70,14 @@ public class GameObject {
     public Vector2D position;
     public Vector2D anchor;
     public Vector2D velocity;
+    public boolean active;
 
     public GameObject() {
 //        this.image
         this.position = new Vector2D(0, 0);
         this.anchor = new Vector2D(0.5f, 0.5f);
         this.velocity = new Vector2D();
+        this.active = true;
     }
 
 
@@ -67,5 +91,13 @@ public class GameObject {
             this.renderer.render(g, this);
         }
 
+    }
+
+    public void destroy() {
+        this.active = false;
+    }
+
+    public void reset() {
+        this.active = true;
     }
 }

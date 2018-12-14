@@ -15,6 +15,22 @@ public class Rectangle {
         this.height = height;
     }
 
+    public float top() {
+        return this.position.y;
+    }
+
+    public float bot() {
+        return this.top() + this.height;
+    }
+
+    public float left() {
+        return this.position.x;
+    }
+
+    public float right() {
+        return this.left() + this.width;
+    }
+
     /**
      * @param other
      * @return true: nếu hình chữ nhật được gọi (this) có phần
@@ -23,15 +39,21 @@ public class Rectangle {
      */
     public boolean intersects(Rectangle other) {
         // TODO: 1. Triển khai phần code kiểm tra va chạm giữa 2 hình chữ nhật ở đây
-        if (this.position.y > other.position.y + other.height
-            || this.position.y + this.height < other.position.y) {
-            return false;
-        }
-        if (this.position.x + this.width < other.position.x
-            || this.position.x > other.position.x +other.width) {
-            return false;
-        }
-        return true;
+
+        return this.bot() >= other.top()
+                && this.top() <= other.bot()
+                && this.left() <= other.right()
+                && this.right() >= other.left();
+
+//        if (this.position.y > other.position.y + other.height
+//            || this.position.y + this.height < other.position.y) {
+//            return false;
+//        }
+//        if (this.position.x + this.width < other.position.x
+//            || this.position.x > other.position.x +other.width) {
+//            return false;
+//        }
+//        return true;
     }
 
     //TODO: 2. Chạy hàm main này để test

@@ -3,14 +3,17 @@ package game.enemy;
 import game.Background;
 import game.GameObject;
 import game.Settings;
+import game.physics.BoxCollider;
+import game.physics.Physics;
 import tklibs.Mathx;
 import tklibs.SpriteUtils;
 import game.renderer.Animation;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Enemy extends GameObject {
+public class Enemy extends GameObject implements Physics {
     Background background;
+    BoxCollider boxCollider;
 
     public Enemy() {
         super();
@@ -18,6 +21,7 @@ public class Enemy extends GameObject {
         this.velocity.set(3, -1);
         this.background = new Background();
         this.createRenderer();
+        this.boxCollider = new BoxCollider();
     }
 
     private void createRenderer() {
@@ -56,4 +60,8 @@ public class Enemy extends GameObject {
 
     }
 
+    @Override
+    public BoxCollider getBoxCollider() {
+        return this.boxCollider;
+    }
 }

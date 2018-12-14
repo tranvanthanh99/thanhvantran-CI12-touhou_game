@@ -51,9 +51,9 @@ public class Player extends GameObject {
     private void fire() {
 
         if (GameWindow.isSpacePress) {
-            PlayerBullet bullet = new PlayerBullet();
+            PlayerBullet bullet = GameObject.recycle(PlayerBullet.class);
             bullet.position = new Vector2D(this.position.x, this.position.y - bullet.image.getHeight());
-            GameObject.addGameObject(bullet);
+//            GameObject.addGameObject(bullet);
             this.fireCounter.reset();
 
         }
