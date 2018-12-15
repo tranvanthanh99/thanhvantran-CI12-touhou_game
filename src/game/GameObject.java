@@ -1,6 +1,7 @@
 package game;
 
 import game.physics.BoxCollider;
+import game.physics.Physics;
 import game.renderer.Renderer;
 import game.renderer.TextRenderer;
 
@@ -20,7 +21,7 @@ public class GameObject {
         for (int i = 0; i <  gameObjects.size(); i++) {
             GameObject object = gameObjects.get(i);
             if (!object.active
-                    && clazz.isAssignableFrom(object.getClass())) {
+                    && clazz.isAssignableFrom(object.getClass())) {  // object instance of clazz
                 return (E)object;
             }
         }
@@ -28,7 +29,17 @@ public class GameObject {
     }
 
     public static <E extends GameObject> E findIntersected (Class<E> clazz, BoxCollider boxCollider) {
-        
+        for (int i = 0; i < gameObjects.size(); i++) {
+            GameObject object = gameObjects.get(i);
+            if (clazz.isAssignableFrom(object.getClass())  // object instance of E
+                    && object instanceof Physics           // object instance of Physics
+                    // cast object -> Physic, check if getBoxCollider overlap BoxCollider
+                    && ((Physics)object).getBoxCollider().intersects(boxCollider)
+                    && object.active) {
+                return (E)object;
+            }
+        }
+        return null;
     }
 
     // class<E> clazz = Background.class
@@ -50,7 +61,7 @@ public class GameObject {
     }
 
     public static void runAll() {
-        System.out.println(gameObjects.size());
+//        System.out.println(gameObjects.size());
         for (int i = 0; i < gameObjects.size(); i++) {
             GameObject object = gameObjects.get(i);
             if (object.active) object.run();

@@ -21,7 +21,7 @@ public class Enemy extends GameObject implements Physics {
         this.velocity.set(3, -1);
         this.background = new Background();
         this.createRenderer();
-        this.boxCollider = new BoxCollider();
+        this.boxCollider = new BoxCollider(this.position, this.anchor, 20, 20);
     }
 
     private void createRenderer() {

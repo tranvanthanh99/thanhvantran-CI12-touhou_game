@@ -1,6 +1,7 @@
 package game.player;
 
 import game.GameObject;
+import game.enemy.Enemy;
 import game.physics.BoxCollider;
 import game.physics.Physics;
 import game.renderer.Animation;
@@ -20,7 +21,7 @@ public class PlayerBullet extends GameObject implements Physics {
         this.image = SpriteUtils.loadImage("assets/images/player-bullets/a/3.png");
         this.createRenderer();
         this.velocity.set(0, -3);
-        this.boxCollider = new BoxCollider();
+        this.boxCollider = new BoxCollider(this.position, this.anchor, 20, 20);
     }
 
     public void createRenderer() {
@@ -37,7 +38,17 @@ public class PlayerBullet extends GameObject implements Physics {
     public void run() {
         super.run();
         if (this.position.y < -30) this.destroy();
+
+        this.checkIntersect();
 //        this.position.addThis(0, -5);
+    }
+
+    private void checkIntersect() {
+        Enemy enemy = GameObject.findIntersected(Enemy.class, this.boxCollider);
+        if (enemy != null) {
+            this.destroy();
+            enemy.destroy();
+        }
     }
 
 

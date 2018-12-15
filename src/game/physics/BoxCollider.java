@@ -15,6 +15,7 @@ public class BoxCollider {
 
     public BoxCollider(Vector2D position, Vector2D anchor , int width, int height) {
         this.position = position;
+        this.anchor = anchor;
         this.width = width;
         this.height = height;
     }
