@@ -1,6 +1,7 @@
 package game.enemy;
 
 import game.Background;
+import game.FrameCounter;
 import game.GameObject;
 import game.Settings;
 import game.physics.BoxCollider;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 public class Enemy extends GameObject implements Physics {
     Background background;
     BoxCollider boxCollider;
+    FrameCounter fireCounter;
 
     public Enemy() {
         super();
@@ -22,6 +24,7 @@ public class Enemy extends GameObject implements Physics {
         this.background = new Background();
         this.createRenderer();
         this.boxCollider = new BoxCollider(this.position, this.anchor, 20, 20);
+        this.fireCounter = new FrameCounter(20);
     }
 
     private void createRenderer() {
@@ -57,6 +60,17 @@ public class Enemy extends GameObject implements Physics {
         if (this.position.y < 14 && this.velocity.y <0) {
             this.velocity.set(this.velocity.x, 1);
         }
+
+        if (fireCounter.run()) {
+            this.fire();
+        }
+
+    }
+
+    private void fire() {
+        EnemyBullet bullet = GameObject.recycle(EnemyBullet.class);
+        bullet.position.set(this.position.x, this.position.y );
+        this.fireCounter.reset();
 
     }
 

@@ -24,7 +24,7 @@ public class PlayerBullet extends GameObject implements Physics {
         this.boxCollider = new BoxCollider(this.position, this.anchor, 20, 20);
     }
 
-    public void createRenderer() {
+    private void createRenderer() {
         ArrayList<BufferedImage> images = new ArrayList<>();
         images.add(SpriteUtils.loadImage("assets/images/player-bullets/a/0.png"));
         images.add(SpriteUtils.loadImage("assets/images/player-bullets/a/1.png"));
