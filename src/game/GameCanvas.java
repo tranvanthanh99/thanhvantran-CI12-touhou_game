@@ -1,7 +1,12 @@
 package game;
 
 import game.enemy.Enemy;
+import game.enemy.EnemySummoner;
 import game.player.Player;
+import game.scene.Scence;
+import game.scene.ScenceGameOver;
+import game.scene.ScenceManager;
+import game.scene.SceneWelcome;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,15 +16,14 @@ public class GameCanvas extends JPanel {
 
     public GameCanvas(){
         this.setBackground(Color.white);
-//        this.background = new Background();
-//        GameObject.addGameObject(new Background());
-        GameObject.recycle(Background.class);
-//        this.player = new Player();
-//        GameObject.addGameObject(new Player());
-        GameObject.recycle(Player.class);
-//        GameObject.addGameObject(new Enemy());
-        GameObject.recycle(Enemy.class);
-//        this.playerBullets = new ArrayList<>();
+////        GameObject.addGameObject(new Background());
+//        GameObject.recycle(Background.class);
+////        GameObject.addGameObject(new Player());
+//        GameObject.recycle(Player.class);
+////        GameObject.addGameObject(new Enemy());
+//        GameObject.recycle(EnemySummoner.class);
+        ScenceManager.signNewScene(new SceneWelcome());
+
     }
 
     @Override

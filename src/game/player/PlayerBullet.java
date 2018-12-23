@@ -1,6 +1,7 @@
 package game.player;
 
 import game.GameObject;
+import game.GameObjectPhysics;
 import game.enemy.Enemy;
 import game.physics.BoxCollider;
 import game.physics.Physics;
@@ -12,9 +13,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 
-public class PlayerBullet extends GameObject implements Physics {
+public class PlayerBullet extends GameObjectPhysics {
     BufferedImage image;
-    BoxCollider boxCollider;
 
     public PlayerBullet() {
         super();
@@ -52,8 +52,5 @@ public class PlayerBullet extends GameObject implements Physics {
     }
 
 
-    @Override
-    public BoxCollider getBoxCollider() {
-        return this.boxCollider;
-    }
+
 }

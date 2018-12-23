@@ -1,9 +1,6 @@
 package game.enemy;
 
-import game.Background;
-import game.FrameCounter;
-import game.GameObject;
-import game.Settings;
+import game.*;
 import game.physics.BoxCollider;
 import game.physics.Physics;
 import tklibs.Mathx;
@@ -12,9 +9,8 @@ import game.renderer.Animation;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Enemy extends GameObject implements Physics {
+public class Enemy extends GameObjectPhysics {
     Background background;
-    BoxCollider boxCollider;
     FrameCounter fireCounter;
 
     public Enemy() {
@@ -43,8 +39,14 @@ public class Enemy extends GameObject implements Physics {
 
     public void run() {
         super.run();
+        this.move();
+        this.fire();
+
+    }
+
+    private void move() {
         if (this.position.x > this.background.image.getWidth() - 14
-            && this.velocity.x >0) {
+                && this.velocity.x >0) {
             this.velocity.set(-3, this.velocity.y);
         }
 
@@ -60,22 +62,21 @@ public class Enemy extends GameObject implements Physics {
         if (this.position.y < 14 && this.velocity.y <0) {
             this.velocity.set(this.velocity.x, 1);
         }
+    }
 
+    private void fire() {
         if (fireCounter.run()) {
-            this.fire();
+            EnemyBullet bullet = GameObject.recycle(EnemyBullet.class);
+            bullet.position.set(this.position.x, this.position.y );
+            this.fireCounter.reset();
         }
 
     }
 
-    private void fire() {
-        EnemyBullet bullet = GameObject.recycle(EnemyBullet.class);
-        bullet.position.set(this.position.x, this.position.y );
-        this.fireCounter.reset();
-
-    }
-
     @Override
-    public BoxCollider getBoxCollider() {
-        return this.boxCollider;
+    public void destroy() {
+        super.destroy();
+        EnemyExplosion explosion = GameObject.recycle(EnemyExplosion.class);
+        explosion.position.set(this.position);
     }
 }

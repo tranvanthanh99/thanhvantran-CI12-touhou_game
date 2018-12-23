@@ -5,7 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class GameWindow extends JFrame {
-    public static boolean isUpPress, isDownPress, isLeftPress, isRightPress, isSpacePress;
+    public static boolean isUpPress, isDownPress, isLeftPress, isRightPress, isSpacePress, isAnyKeyPress;
 
     public GameWindow(){
         this.setVisible(true);
@@ -16,6 +16,7 @@ public class GameWindow extends JFrame {
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
+                isAnyKeyPress = true;
                 if (e.getKeyCode() == KeyEvent.VK_W) {
                     isUpPress = true;
                 }
@@ -35,6 +36,7 @@ public class GameWindow extends JFrame {
 
             @Override
             public void keyReleased(KeyEvent e) {
+                isAnyKeyPress = false;
                 if (e.getKeyCode() == KeyEvent.VK_W) {
                     isUpPress = false;
                 }

@@ -11,11 +11,17 @@ public class Animation extends Renderer{
     ArrayList<BufferedImage> images;
     int currentImageIndex;
     FrameCounter nextImageCounter;
+    boolean isOnce;
 
     public Animation(ArrayList<BufferedImage> images) {
         this.images = images;
         this.currentImageIndex = 0;
         this.nextImageCounter = new FrameCounter(5);
+    }
+
+    public Animation(ArrayList<BufferedImage> images, boolean isOnce) {
+        this(images);
+        this.isOnce = isOnce;
     }
 
     @Override
@@ -25,6 +31,10 @@ public class Animation extends Renderer{
 
         if (this.nextImageCounter.run()) {
             this.currentImageIndex++;
+
+            if (this.isOnce && this.currentImageIndex >= this.images.size()) {
+                master.destroy();
+            }
             if (this.currentImageIndex >= this.images.size()) {
                 this.currentImageIndex = 0;
             }

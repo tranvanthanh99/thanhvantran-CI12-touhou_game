@@ -4,16 +4,20 @@ import game.*;
 import game.physics.BoxCollider;
 import game.physics.Physics;
 import game.renderer.Animation;
+import game.scene.ScenceGameOver;
+import game.scene.ScenceManager;
 import tklibs.Mathx;
 import tklibs.SpriteUtils;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Player extends GameObject implements Physics {
+public class Player extends GameObjectPhysics {
     Background background;
     FrameCounter fireCounter;
-    BoxCollider boxCollider;
+    int hp;
+    boolean immune;
+    FrameCounter immuneCounter;
 
     public Player(){
         super();
@@ -23,6 +27,9 @@ public class Player extends GameObject implements Physics {
         this.background = new Background();
         this.fireCounter = new FrameCounter(20);
         this.boxCollider = new BoxCollider(this.position, this.anchor, 20, 20);
+        this.hp = 3;
+        this.immune = false;
+        this.immuneCounter = new FrameCounter(90);
     }
 
     private void createRenderer() {
@@ -43,12 +50,17 @@ public class Player extends GameObject implements Physics {
     public void run() {
         super.run();
         this.move();
-
+        this.limitPlayerPosition();
         if (this.fireCounter.run()) {
             this.fire();
-
         }
-        this.limitPlayerPosition();
+        this.checkImmune();
+    }
+
+    private void checkImmune() {
+        if (this.immune && this.immuneCounter.run()) {
+            this.immune = false;
+        }
     }
 
     private void fire() {
@@ -94,9 +106,17 @@ public class Player extends GameObject implements Physics {
         this.position.set(x, y);
     }
 
-
-    @Override
-    public BoxCollider getBoxCollider() {
-        return this.boxCollider;
+    public void takeDamage(int damage) {
+        if (this.immune)
+            return;
+        this.hp -= damage;
+        this.immune = true;
+        this.immuneCounter.reset();
+        if (this.hp <= 0) {
+            this.hp = 0;
+            this.destroy();
+            ScenceManager.signNewScene(new ScenceGameOver());
+        }
     }
+
 }
